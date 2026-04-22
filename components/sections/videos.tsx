@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import type { Video } from "@/lib/db";
-import { thumbnailUrl, embedUrl } from "@/lib/db";
+
+const thumbnailUrl = (id: string) =>
+  `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+const embedUrl = (id: string) =>
+  `https://www.youtube.com/embed/${id}?autoplay=1`;
 import {
   AnimatedElement,
   StaggerContainer,

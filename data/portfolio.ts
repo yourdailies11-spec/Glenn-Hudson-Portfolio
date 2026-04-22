@@ -31,7 +31,7 @@ export const portfolioItems: PortfolioItem[] = [
   {
     id: "2",
     title: "ITV NYE Big Bash 2023",
-    category: "Dancer/Main Role Performer",
+    category: "performance",
     description:
       "I played the main character in the ITV NYE Big Bash Windrush performance as a dancer and performer.",
     tags: ["Commercial", "Direction", "International, ITV"],

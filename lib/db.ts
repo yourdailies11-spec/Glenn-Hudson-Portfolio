@@ -1,3 +1,5 @@
+"use server";
+
 import { cacheLife, cacheTag } from "next/cache";
 import { supabase } from "./supabase";
 
@@ -105,12 +107,3 @@ export async function getFeaturedVideos(): Promise<Video[]> {
   return data ?? [];
 }
 
-// ---- YouTube helpers ----
-
-export function thumbnailUrl(videoId: string) {
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-}
-
-export function embedUrl(videoId: string) {
-  return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-}
