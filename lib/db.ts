@@ -1,7 +1,7 @@
 "use server";
 
 import { cacheLife, cacheTag } from "next/cache";
-import { supabase } from "./supabase";
+import { getSupabase } from "./supabase";
 
 export interface PortfolioItem {
   id: string;
@@ -34,7 +34,10 @@ export async function getPortfolioItems(): Promise<PortfolioItem[]> {
   cacheLife("hours");
   cacheTag("portfolio");
 
-  const { data, error } = await supabase
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
     .from("portfolio_items")
     .select("*")
     .eq("published", true)
@@ -52,7 +55,10 @@ export async function getFeaturedPortfolioItems(): Promise<PortfolioItem[]> {
   cacheLife("hours");
   cacheTag("portfolio");
 
-  const { data, error } = await supabase
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
     .from("portfolio_items")
     .select("*")
     .eq("published", true)
@@ -74,7 +80,10 @@ export async function getVideos(): Promise<Video[]> {
   cacheLife("hours");
   cacheTag("videos");
 
-  const { data, error } = await supabase
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
     .from("videos")
     .select("*")
     .eq("published", true)
@@ -92,7 +101,10 @@ export async function getFeaturedVideos(): Promise<Video[]> {
   cacheLife("hours");
   cacheTag("videos");
 
-  const { data, error } = await supabase
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
     .from("videos")
     .select("*")
     .eq("published", true)
