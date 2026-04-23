@@ -12,12 +12,17 @@ const fadeUp = (delay: number) => ({
 export function HomeHeroSection({
   description,
   profilePhoto,
+  heroVideoId,
 }: {
   description: string;
   profilePhoto: string | null;
+  heroVideoId: string | null;
 }) {
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-[68px] overflow-hidden">
+      {/* Gradient veil — stops navbar text clashing with hero display text */}
+      <div className="absolute top-0 inset-x-0 h-36 bg-gradient-to-b from-bg-primary via-bg-primary/60 to-transparent pointer-events-none z-10" />
+
       {/* Main content */}
       <div className="flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 md:px-10 py-16">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_340px] gap-12 lg:gap-20 items-center">
@@ -70,21 +75,43 @@ export function HomeHeroSection({
             </motion.div>
           </div>
 
-          {/* Right — profile photo */}
+          {/* Right — profile photo / background video */}
           <motion.div
             {...fadeUp(0.5)}
             className="hidden md:block"
           >
             <div className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative">
+              {/* Background video layer */}
+              {heroVideoId && (
+                <>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${heroVideoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${heroVideoId}&playsinline=1&rel=0&enablejsapi=0`}
+                    className="absolute pointer-events-none"
+                    style={{
+                      width: "300%",
+                      height: "300%",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      border: "none",
+                    }}
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    title="Background video"
+                  />
+                  {/* Block iframe interaction */}
+                  <div className="absolute inset-0 z-10" />
+                </>
+              )}
+
+              {/* Profile photo on top, or silhouette placeholder */}
               {profilePhoto ? (
                 <img
                   src={profilePhoto}
                   alt="Glenn Hudson"
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover z-20"
                 />
-              ) : (
+              ) : !heroVideoId ? (
                 <div className="w-full h-full flex flex-col items-center justify-center gap-5">
-                  {/* Silhouette placeholder */}
                   <svg
                     width="60"
                     height="60"
@@ -103,7 +130,7 @@ export function HomeHeroSection({
                     Profile Photo
                   </p>
                 </div>
-              )}
+              ) : null}
             </div>
           </motion.div>
 

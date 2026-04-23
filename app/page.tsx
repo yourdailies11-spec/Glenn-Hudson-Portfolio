@@ -17,14 +17,16 @@ export default async function Home() {
     settings.hero_description || siteConfig.hero.description;
   const profilePhoto =
     settings.profile_photo_url || siteConfig.profilePhoto || null;
+  const heroVideoId = settings.hero_video_id || null;
+  const instagramUrl = settings.social_instagram || siteConfig.social.instagram;
 
   return (
     <main className="flex-1">
-      <HomeHeroSection description={heroDescription} profilePhoto={profilePhoto} />
+      <HomeHeroSection description={heroDescription} profilePhoto={profilePhoto} heroVideoId={heroVideoId} />
       <HomeVideoSlideshow videos={featuredVideos} />
       <HomeFeaturedWork items={featuredWork} />
       <HomeFeaturedVideos videos={featuredVideos} />
-      <HomeCtaSection />
+      <HomeCtaSection instagram={instagramUrl} />
     </main>
   );
 }

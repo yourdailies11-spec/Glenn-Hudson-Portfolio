@@ -24,7 +24,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
   const filtered =
     selectedCategory === "all"
       ? items
-      : items.filter((item) => item.category === selectedCategory);
+      : items.filter((item) => item.category.toLowerCase() === selectedCategory);
 
   return (
     <>
@@ -48,76 +48,60 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
         </AnimatedElement>
 
         <StaggerContainer>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-subtle">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {filtered.map((item, i) => (
               <StaggerItem key={item.id}>
                 <div
-                  className={`group bg-bg-primary hover:bg-bg-secondary transition-colors duration-500 ${item.video_id ? "cursor-pointer" : ""}`}
+                  className={`group relative aspect-square overflow-hidden bg-bg-tertiary ${item.video_id ? "cursor-pointer" : ""}`}
                   onClick={() => item.video_id && setActiveItem(item)}
                 >
-                  <div className="aspect-[4/5] overflow-hidden bg-bg-tertiary relative">
-                    {item.image_url ? (
-                      <img
-                        src={item.image_url}
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-12 h-12 border border-border-low opacity-30" />
-                      </div>
-                    )}
-
-                    <div className="absolute top-5 left-5">
-                      <span className="text-[11px] font-body font-500 text-text-light/60 tracking-widest">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+                  {item.image_url ? (
+                    <img
+                      src={item.image_url}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-8 h-8 border border-border-low opacity-30" />
                     </div>
+                  )}
 
-                    {item.video_id && (
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
-                        <div className="w-14 h-14 border border-text-primary/60 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-300">
-                          <div
-                            className="w-0 h-0 ml-1"
-                            style={{
-                              borderTop: "8px solid transparent",
-                              borderBottom: "8px solid transparent",
-                              borderLeft: "14px solid currentColor",
-                            }}
-                          />
-                        </div>
+                  {/* Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+                  {/* Index */}
+                  <span className="absolute top-3 left-3 text-[10px] font-body font-500 text-text-light/50 tracking-widest">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Play icon */}
+                  {item.video_id && (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-10 h-10 border border-white/60 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-300">
+                        <div
+                          className="w-0 h-0 ml-0.5"
+                          style={{
+                            borderTop: "6px solid transparent",
+                            borderBottom: "6px solid transparent",
+                            borderLeft: "10px solid white",
+                          }}
+                        />
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
-                  <div className="p-8">
-                    <p className="text-[10px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-3">
+                  {/* Bottom text */}
+                  <div className="absolute bottom-0 inset-x-0 p-3">
+                    <p className="text-[9px] font-body font-600 uppercase tracking-[0.18em] text-accent-gold mb-1">
                       {item.category.replace(/-/g, " ")} &middot; {item.year}
                     </p>
-                    <h3 className="text-2xl font-display font-600 text-text-primary group-hover:text-accent-gold transition-colors duration-300 mb-3">
+                    <p className="text-sm font-display font-600 text-text-primary leading-snug line-clamp-1 group-hover:text-accent-gold transition-colors duration-300">
                       {item.title}
-                    </h3>
+                    </p>
                     {item.description && (
-                      <p className="text-sm font-body text-text-muted leading-relaxed">
+                      <p className="text-[11px] font-body text-text-light/70 leading-relaxed mt-1 line-clamp-2 hidden md:block">
                         {item.description}
-                      </p>
-                    )}
-                    {item.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-5">
-                        {item.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-[10px] font-body uppercase tracking-wider px-3 py-1 border border-border-low text-text-light"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    {item.video_id && (
-                      <p className="text-[10px] font-body uppercase tracking-[0.18em] text-accent-gold mt-5 flex items-center gap-2">
-                        <span className="block w-3 h-px bg-accent-gold" />
-                        Watch
                       </p>
                     )}
                   </div>
@@ -138,7 +122,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
 
       {activeItem?.video_id && (
         <div
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-6 backdrop-blur-sm"
           onClick={() => setActiveItem(null)}
         >
           <button
@@ -155,7 +139,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
             <p className="text-sm font-display text-text-primary">{activeItem.title}</p>
           </div>
           <div
-            className="w-full max-w-5xl aspect-video"
+            className="w-full max-w-4xl aspect-video shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe

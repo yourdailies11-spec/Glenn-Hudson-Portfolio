@@ -200,9 +200,9 @@ export function ContactSection({
                 href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-text-primary transition-colors duration-300"
+                className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-[#E1306C] transition-colors duration-300"
               >
-                <Instagram size={16} />
+                <Instagram size={16} style={{ color: "#E1306C" }} />
                 Instagram
               </a>
               <a
