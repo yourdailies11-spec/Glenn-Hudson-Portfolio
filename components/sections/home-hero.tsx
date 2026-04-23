@@ -25,10 +25,10 @@ export function HomeHeroSection({
 
       {/* Main content */}
       <div className="flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 md:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_340px] gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 lg:gap-14 items-stretch">
 
           {/* Left — text */}
-          <div>
+          <div className="flex flex-col justify-center">
             {/* Profile photo above label */}
             {profilePhoto && (
               <motion.div {...fadeUp(0.1)} className="mb-8">
@@ -88,13 +88,13 @@ export function HomeHeroSection({
             </motion.div>
           </div>
 
-          {/* Right — profile photo / background video */}
+          {/* Right — background video */}
           <motion.div
             {...fadeUp(0.5)}
-            className="hidden md:block"
+            className="hidden md:flex md:self-stretch"
           >
             <motion.div
-              className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative"
+              className="w-full h-full min-h-[420px] bg-bg-tertiary border border-border-subtle overflow-hidden relative"
               initial={{ clipPath: "inset(12% 38% 12% 38%)" }}
               animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
               transition={{ duration: 2.2, ease: [0.25, 0, 0, 1], delay: 1.0 }}
