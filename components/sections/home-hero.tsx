@@ -1,44 +1,87 @@
 "use client";
 
-import { siteConfig } from "@/data/site-content";
-import { Button } from "@/components/ui/button";
-import { AnimatedElement } from "@/components/ui/motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 1, ease: [0.25, 0, 0, 1], delay },
+});
 
 export function HomeHeroSection() {
   return (
-    <section className="py-32 md:py-48 px-6 md:px-8">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedElement type="slide-up" delay={0.1}>
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <p className="text-xs font-body font-600 text-accent-gold uppercase tracking-[0.15em]">
-                Choreographer & Artistic Director
-              </p>
-              <h1 className="text-6xl md:text-7xl font-display font-600 leading-tight">
-                {siteConfig.hero.title}
-              </h1>
-            </div>
+    <section className="relative min-h-screen flex flex-col justify-between pt-[68px] px-6 md:px-10 overflow-hidden">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col justify-center py-16">
+        <motion.p
+          {...fadeUp(0.15)}
+          className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-10"
+        >
+          Choreographer &amp; Artistic Director
+        </motion.p>
 
-            <p className="text-xl md:text-2xl font-body text-text-secondary leading-relaxed max-w-2xl">
-              {siteConfig.hero.description}
-            </p>
+        <div>
+          <motion.h1
+            {...fadeUp(0.3)}
+            className="font-display font-600 text-text-primary leading-[0.88] select-none"
+            style={{
+              fontSize: "clamp(4.5rem, 13vw, 13rem)",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Glenn
+          </motion.h1>
+          <motion.h1
+            {...fadeUp(0.46)}
+            className="font-display font-600 text-text-muted leading-[0.88] select-none"
+            style={{
+              fontSize: "clamp(4.5rem, 13vw, 13rem)",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Hudson
+          </motion.h1>
+        </div>
 
-            <div className="flex flex-col sm:flex-row gap-5 pt-8">
-              <Link href="/work">
-                <Button variant="primary" size="lg">
-                  View Work
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="secondary" size="lg">
-                  Get In Touch
-                </Button>
-              </Link>
-            </div>
+        <motion.div {...fadeUp(0.65)} className="mt-14 max-w-xs">
+          <p className="text-[15px] font-body text-text-secondary leading-relaxed mb-10">
+            Crafting purposeful movement for stage, screen, and creative
+            collaboration — based in London.
+          </p>
+          <div className="flex items-center gap-10">
+            <Link
+              href="/work"
+              className="group flex items-center gap-3 text-[11px] font-body font-600 uppercase tracking-[0.22em] text-text-primary hover:text-accent-gold transition-colors duration-300"
+            >
+              View Work
+              <span className="block h-px bg-current w-6 group-hover:w-10 transition-all duration-400 ease-out" />
+            </Link>
+            <Link
+              href="/contact"
+              className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold hover:opacity-60 transition-opacity duration-300"
+            >
+              Get in Touch
+            </Link>
           </div>
-        </AnimatedElement>
+        </motion.div>
       </div>
+
+      {/* Bottom metadata strip */}
+      <motion.div {...fadeUp(0.85)} className="pb-10">
+        <div className="w-full h-px bg-border-subtle mb-7" />
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-body font-500 uppercase tracking-[0.18em] text-text-light">
+            London, UK
+          </span>
+          <span className="text-[11px] font-body font-500 uppercase tracking-[0.18em] text-text-light hidden sm:block">
+            Stage &middot; Screen &middot; Direction
+          </span>
+          <span className="text-[11px] font-body font-500 uppercase tracking-[0.18em] text-text-light">
+            Est. 2010
+          </span>
+        </div>
+      </motion.div>
     </section>
   );
 }

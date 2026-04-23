@@ -2,92 +2,146 @@
 
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/data/site-content";
-import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const navLinks = [
+  { label: "About", href: "/about" },
+  { label: "Work", href: "/work" },
+  { label: "Videos", href: "/videos" },
+];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Work", href: "/work" },
-    { label: "Videos", href: "/videos" },
-    { label: "Contact", href: "/contact" },
-  ];
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-        isScrolled
-          ? "bg-bg-primary/95 backdrop-blur-md border-b border-border-subtle shadow-sm"
-          : "bg-transparent border-b border-transparent"
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-6 md:px-8">
-        <div className="flex items-center justify-between h-20">
+    <>
+      {/* Main bar */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-bg-primary/95 backdrop-blur-md border-b border-border-subtle"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-[68px]">
+
           {/* Logo */}
           <Link
             href="/"
-            className="text-lg font-display font-600 tracking-tight text-text-primary"
+            className="text-[11px] font-body font-600 text-text-primary uppercase tracking-[0.22em] hover:text-accent-gold transition-colors duration-300"
           >
-            {siteConfig.name}
+            Glenn Hudson
           </Link>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-10">
+          {/* Desktop links — hidden on mobile */}
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <li key={link.href}>
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-[13px] font-body font-500 transition-colors duration-300 ${
+                  pathname === link.href
+                    ? "text-text-primary"
+                    : "text-text-muted hover:text-text-primary"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/contact"
+              className="text-[12px] font-body font-600 uppercase tracking-widest px-5 py-2 border border-accent-gold/40 text-accent-gold hover:bg-accent-gold hover:text-bg-primary transition-all duration-300"
+            >
+              Get in Touch
+            </Link>
+          </nav>
+
+          {/* Hamburger — hidden on desktop */}
+          <button
+            className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8"
+            onClick={() => setIsOpen((v) => !v)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            <span
+              className={`block h-px bg-text-primary transition-all duration-400 origin-center ${
+                isOpen ? "w-6 rotate-45 translate-y-[7px]" : "w-6"
+              }`}
+            />
+            <span
+              className={`block h-px bg-text-primary transition-all duration-300 ${
+                isOpen ? "w-0 opacity-0" : "w-4"
+              }`}
+            />
+            <span
+              className={`block h-px bg-text-primary transition-all duration-400 origin-center ${
+                isOpen ? "w-6 -rotate-45 -translate-y-[7px]" : "w-6"
+              }`}
+            />
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile full-screen overlay */}
+      <div
+        className={`fixed inset-0 z-40 bg-bg-primary flex flex-col transition-all duration-500 md:hidden ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col h-full px-8 pt-28 pb-12">
+          <nav className="flex flex-col">
+            {[...navLinks, { label: "Contact", href: "/contact" }].map(
+              (link, i) => (
                 <Link
+                  key={link.href}
                   href={link.href}
-                  className="text-sm font-body font-500 text-text-secondary transition-colors duration-300 hover:text-accent-gold"
+                  onClick={() => setIsOpen(false)}
+                  className="py-5 border-b border-border-subtle text-5xl font-display font-600 text-text-primary hover:text-accent-gold transition-colors duration-300"
+                  style={{
+                    transitionDelay: isOpen ? `${i * 60 + 100}ms` : "0ms",
+                    transform: isOpen ? "none" : "translateY(12px)",
+                    opacity: isOpen ? 1 : 0,
+                    transition: `transform 400ms ease ${i * 60 + 100}ms, opacity 400ms ease ${i * 60 + 100}ms, color 300ms ease`,
+                  }}
                 >
                   {link.label}
                 </Link>
-              </li>
-            ))}
-          </ul>
+              )
+            )}
+          </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 hover:bg-border-subtle transition-all duration-300 text-text-primary"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden border-t border-border-subtle pb-6">
-            <ul className="flex flex-col gap-4 pt-6">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-base font-body font-500 block py-2 text-text-secondary hover:text-accent-gold transition-colors duration-300"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-auto space-y-2">
+            <p className="text-xs font-body text-text-light uppercase tracking-widest">
+              London, UK
+            </p>
+            <a
+              href={`mailto:${siteConfig.social.email}`}
+              className="text-sm font-body text-accent-gold hover:opacity-70 transition-opacity"
+            >
+              {siteConfig.social.email}
+            </a>
           </div>
-        )}
-      </nav>
-    </header>
+        </div>
+      </div>
+    </>
   );
 }

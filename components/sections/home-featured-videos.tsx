@@ -2,82 +2,87 @@
 
 import { useState } from "react";
 import type { Video } from "@/lib/db";
+import { StaggerContainer, StaggerItem, AnimatedElement } from "@/components/ui/motion";
+import { X } from "lucide-react";
+import Link from "next/link";
 
 const thumbnailUrl = (id: string) =>
   `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 const embedUrl = (id: string) =>
   `https://www.youtube.com/embed/${id}?autoplay=1`;
-import {
-  AnimatedElement,
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/ui/motion";
-import { Play, X } from "lucide-react";
-import Link from "next/link";
 
 export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
 
   return (
     <>
-      <section className="py-24 md:py-32 px-6 md:px-8 border-t border-border-subtle bg-bg-secondary">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedElement type="slide-up" className="mb-16">
-            <div className="flex items-end justify-between gap-8 mb-12">
-              <div>
-                <h2 className="text-4xl md:text-5xl font-display font-600 mb-4">
+      <section className="py-28 md:py-36 px-6 md:px-10 border-t border-border-subtle bg-bg-secondary">
+        <div className="max-w-7xl mx-auto">
+          {/* Section header */}
+          <AnimatedElement type="fade-in">
+            <div className="flex items-center justify-between mb-20">
+              <div className="flex items-center gap-6">
+                <span className="block w-10 h-px bg-accent-gold" />
+                <span className="text-[11px] font-body font-600 uppercase tracking-[0.25em] text-accent-gold">
                   Featured Videos
-                </h2>
-                <p className="text-lg text-text-secondary leading-relaxed max-w-xl">
-                  Explore choreography, performances, and behind-the-scenes
-                  content.
-                </p>
+                </span>
               </div>
               <Link
                 href="/videos"
-                className="text-accent-gold hover:text-accent-gold/80 transition-colors duration-300 font-body whitespace-nowrap"
+                className="group flex items-center gap-3 text-[11px] font-body font-500 uppercase tracking-[0.2em] text-text-light hover:text-text-primary transition-colors duration-300"
               >
-                View all →
+                All Videos
+                <span className="block h-px bg-current w-5 group-hover:w-8 transition-all duration-300 ease-out" />
               </Link>
             </div>
           </AnimatedElement>
 
           <StaggerContainer>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-subtle">
               {videos.map((video) => (
                 <StaggerItem key={video.id}>
                   <button
                     onClick={() => setActiveVideoId(video.video_id)}
-                    className="w-full text-left group cursor-pointer"
+                    className="w-full text-left group bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-500"
                   >
-                    <div className="mb-6 aspect-video border border-border-low group-hover:border-accent-gold/20 transition-all duration-500 relative overflow-hidden">
+                    {/* Thumbnail */}
+                    <div className="aspect-video overflow-hidden relative">
                       <img
                         src={thumbnailUrl(video.video_id)}
                         alt={video.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 flex items-center justify-center transition-all duration-500">
-                        <div className="w-16 h-16 rounded-full bg-accent-gold/10 flex items-center justify-center group-hover:bg-accent-gold/20 group-hover:scale-110 transition-all duration-500">
-                          <Play
-                            size={32}
-                            className="text-accent-gold ml-1"
-                            fill="currentColor"
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-500 flex items-center justify-center">
+                        {/* Play button */}
+                        <div className="w-14 h-14 border border-text-primary/40 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-400">
+                          <div
+                            className="w-0 h-0 ml-1"
+                            style={{
+                              borderTop: "8px solid transparent",
+                              borderBottom: "8px solid transparent",
+                              borderLeft: "14px solid currentColor",
+                            }}
                           />
                         </div>
                       </div>
                       {video.duration && (
-                        <div className="absolute bottom-3 right-3 bg-black/70 text-accent-gold text-xs font-body px-3 py-1.5">
+                        <div className="absolute bottom-4 right-4 text-[11px] font-body font-500 text-text-primary/70 tracking-wider">
                           {video.duration}
                         </div>
                       )}
                     </div>
-                    <div className="space-y-3">
-                      <h3 className="text-lg font-display font-600 line-clamp-2 group-hover:text-accent-gold transition-colors duration-300">
+
+                    {/* Info */}
+                    <div className="p-7">
+                      <h3 className="text-xl font-display font-600 text-text-primary group-hover:text-accent-gold transition-colors duration-300 line-clamp-2 mb-2">
                         {video.title}
                       </h3>
-                      <p className="text-base text-text-secondary line-clamp-2">
-                        {video.description}
-                      </p>
+                      {video.description && (
+                        <p className="text-sm font-body text-text-light line-clamp-2 leading-relaxed">
+                          {video.description}
+                        </p>
+                      )}
                     </div>
                   </button>
                 </StaggerItem>
@@ -87,20 +92,21 @@ export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
         </div>
       </section>
 
+      {/* Lightbox */}
       {activeVideoId && (
         <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6"
           onClick={() => setActiveVideoId(null)}
         >
           <button
             aria-label="Close video"
-            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors duration-200"
+            className="absolute top-6 right-6 w-10 h-10 border border-text-primary/20 flex items-center justify-center text-text-primary/60 hover:text-text-primary hover:border-text-primary/60 transition-all duration-200"
             onClick={() => setActiveVideoId(null)}
           >
-            <X size={32} />
+            <X size={18} />
           </button>
           <div
-            className="w-full max-w-4xl aspect-video"
+            className="w-full max-w-5xl aspect-video"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
