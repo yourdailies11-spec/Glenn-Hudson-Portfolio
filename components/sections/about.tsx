@@ -3,7 +3,15 @@
 import { siteConfig } from "@/data/site-content";
 import { AnimatedElement, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
-export function AboutSection({ intro, bio }: { intro: string; bio: string }) {
+export function AboutSection({
+  intro,
+  bio,
+  skills,
+}: {
+  intro: string;
+  bio: string;
+  skills: string[];
+}) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
       {/* Heading column */}
@@ -40,7 +48,7 @@ export function AboutSection({ intro, bio }: { intro: string; bio: string }) {
             </p>
             <StaggerContainer>
               <ul className="space-y-4">
-                {siteConfig.about.expertise.map((item, index) => (
+                {skills.map((item, index) => (
                   <StaggerItem key={index}>
                     <li className="flex items-start gap-4">
                       <span className="block w-1 h-1 rounded-full bg-accent-gold mt-2.5 flex-shrink-0" />

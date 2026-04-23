@@ -13,11 +13,14 @@ export default async function AboutPage() {
 
   const intro = settings.about_intro || siteConfig.about.intro;
   const bio = settings.about_bio || siteConfig.about.bio;
+  const skills = settings.skills
+    ? settings.skills.split("\n").map((s) => s.trim()).filter(Boolean)
+    : siteConfig.about.expertise;
 
   return (
     <main className="flex-1">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
-        <AboutSection intro={intro} bio={bio} />
+        <AboutSection intro={intro} bio={bio} skills={skills} />
       </div>
     </main>
   );
