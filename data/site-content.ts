@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Glenn Hudson",
   title: "Glenn Hudson | Choreographer & Artistic Director",
   description:
-    "London-based choreographer and artistic director. Award-winning movement creative for performance, production, and direction.",
+    "London-based choreographer and artistic director. Movement creative for performance, production, and direction.",
   tagline: "London-based choreographer, artistic director",
   profilePhoto: null as string | null, // Set to Supabase Storage URL when available
   location: "London",
