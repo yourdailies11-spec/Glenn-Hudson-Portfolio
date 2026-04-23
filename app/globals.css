@@ -1,6 +1,5 @@
-@tailwindcss /postcss {
-  @layer components;
-}
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
 :root {
   /* Dark Theme Color Palette */
