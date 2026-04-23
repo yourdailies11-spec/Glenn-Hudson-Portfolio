@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { siteConfig } from "@/data/site-content";
 import { AnimatedElement } from "@/components/ui/motion";
-import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
 
 interface FormData {
@@ -17,7 +15,7 @@ interface FormData {
 const projectTypes = [
   { value: "choreography", label: "Choreography" },
   { value: "direction", label: "Artistic Direction" },
-  { value: "workshop", label: "Workshop/Training" },
+  { value: "workshop", label: "Workshop / Training" },
   { value: "collaboration", label: "Collaboration" },
   { value: "other", label: "Other" },
 ];
@@ -30,15 +28,11 @@ export function ContactSection() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [submitMessage, setSubmitMessage] = useState("");
 
   const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -50,7 +44,6 @@ export function ContactSection() {
     setSubmitStatus("idle");
 
     try {
-      // TODO: Replace with actual Supabase submission when configured
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -59,20 +52,13 @@ export function ContactSection() {
 
       if (response.ok) {
         setSubmitStatus("success");
-        setSubmitMessage("Thank you! I'll be in touch within 48 hours.");
-        setFormData({
-          name: "",
-          email: "",
-          projectType: "choreography",
-          message: "",
-        });
+        setSubmitMessage("Thank you. I'll be in touch within 48 hours.");
+        setFormData({ name: "", email: "", projectType: "choreography", message: "" });
       } else {
         setSubmitStatus("error");
-        setSubmitMessage(
-          "Something went wrong. Please try again or email directly.",
-        );
+        setSubmitMessage("Something went wrong. Please try again or email directly.");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
       setSubmitMessage("Connection error. Please try emailing directly.");
     } finally {
@@ -81,211 +67,158 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-32 md:py-40 bg-white">
-      <Container size="md">
-        {/* Header */}
-        <AnimatedElement type="slide-up" className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-display font-600 mb-8">
-            Get In Touch
-          </h2>
-          <p className="text-xl font-body text-muted mb-6 leading-relaxed">
-            For bookings, collaborations, workshops, and creative enquiries.
-          </p>
-          <p className="text-lg font-body text-muted">
-            I'm based in <span className="font-600">{siteConfig.location}</span>{" "}
-            and open to opportunities locally, nationally, and internationally.
-          </p>
-        </AnimatedElement>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20">
+      {/* Form */}
+      <AnimatedElement type="fade-in">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div>
+            <label htmlFor="name" className="block text-[11px] font-body font-600 uppercase tracking-[0.18em] text-text-muted mb-3">
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              placeholder="Your name"
+              className="w-full"
+            />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-20 mb-16">
-          {/* Contact Form */}
-          <AnimatedElement type="fade-in" delay={0.2}>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Name */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-body font-600 text-text-base mb-3"
-                >
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-black/10 font-body text-base focus:outline-none focus:border-accent-warm focus:bg-white transition-all duration-300"
-                  placeholder="Your name"
-                />
-              </div>
+          <div>
+            <label htmlFor="email" className="block text-[11px] font-body font-600 uppercase tracking-[0.18em] text-text-muted mb-3">
+              Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              placeholder="your@email.com"
+              className="w-full"
+            />
+          </div>
 
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-body font-600 text-text-base mb-3"
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-black/10 font-body text-base focus:outline-none focus:border-accent-warm focus:bg-white transition-all duration-300"
-                  placeholder="your@email.com"
-                />
-              </div>
+          <div>
+            <label htmlFor="projectType" className="block text-[11px] font-body font-600 uppercase tracking-[0.18em] text-text-muted mb-3">
+              Project Type
+            </label>
+            <select
+              id="projectType"
+              name="projectType"
+              value={formData.projectType}
+              onChange={handleInputChange}
+              className="w-full cursor-pointer"
+            >
+              {projectTypes.map((type) => (
+                <option key={type.value} value={type.value}>
+                  {type.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              {/* Project Type */}
-              <div>
-                <label
-                  htmlFor="projectType"
-                  className="block text-sm font-body font-600 text-text-base mb-3"
-                >
-                  Project Type
-                </label>
-                <select
-                  id="projectType"
-                  name="projectType"
-                  value={formData.projectType}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-black/10 font-body text-base focus:outline-none focus:border-accent-warm focus:bg-white transition-all duration-300 appearance-none cursor-pointer bg-white"
-                >
-                  {projectTypes.map((type) => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <div>
+            <label htmlFor="message" className="block text-[11px] font-body font-600 uppercase tracking-[0.18em] text-text-muted mb-3">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              required
+              rows={6}
+              placeholder="Tell me about your project..."
+              className="w-full resize-none"
+            />
+          </div>
 
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-body font-600 text-text-base mb-3"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Tell me about your project..."
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 border border-black/10 font-body text-base focus:outline-none focus:border-accent-warm focus:bg-white transition-all duration-300 resize-none"
-                />
-              </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-4 text-[12px] font-body font-600 uppercase tracking-[0.22em] bg-accent-gold text-bg-primary hover:bg-accent-gold/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+          >
+            {isSubmitting ? "Sending..." : "Send Message"}
+          </button>
 
-              {/* Submit Button */}
-              <div className="pt-4">
-                <Button
-                  type="submit"
-                  variant="primary"
-                  size="lg"
-                  isLoading={isSubmitting}
-                  disabled={isSubmitting}
-                  className="w-full"
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </div>
+          {submitStatus === "success" && (
+            <p className="text-sm font-body text-accent-gold border border-accent-gold/20 px-4 py-3">
+              {submitMessage}
+            </p>
+          )}
+          {submitStatus === "error" && (
+            <p className="text-sm font-body text-text-secondary border border-border-low px-4 py-3">
+              {submitMessage}
+            </p>
+          )}
+        </form>
+      </AnimatedElement>
 
-              {/* Status Messages */}
-              {submitStatus === "success" && (
-                <div className="p-4 bg-green-50/50 border border-green-200/50 text-green-800 text-sm">
-                  {submitMessage}
-                </div>
-              )}
-              {submitStatus === "error" && (
-                <div className="p-4 bg-red-50/50 border border-red-200/50 text-red-800 text-sm">
-                  {submitMessage}
-                </div>
-              )}
-            </form>
-          </AnimatedElement>
+      {/* Contact info */}
+      <AnimatedElement type="fade-in">
+        <div className="space-y-10 border-l border-border-subtle pl-10 md:pl-14">
+          <div>
+            <p className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-3">
+              Email
+            </p>
+            <a
+              href={`mailto:${siteConfig.social.email}`}
+              className="text-base font-body text-text-secondary hover:text-accent-gold transition-colors duration-300"
+            >
+              {siteConfig.social.email}
+            </a>
+          </div>
 
-          {/* Contact Info */}
-          <AnimatedElement type="slide-in-left" delay={0.3}>
-            <div className="space-y-8 bg-cream p-8 rounded-lg">
-              {/* Direct Email */}
-              <div>
-                <h3 className="text-sm font-body font-600 text-text-light uppercase tracking-widest mb-2">
-                  Email
-                </h3>
-                <a
-                  href={`mailto:${siteConfig.social.email}`}
-                  className="text-lg font-body text-accent-warm hover:text-accent-warm-hover transition-colors"
-                >
-                  {siteConfig.social.email}
-                </a>
-              </div>
+          <div>
+            <p className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-3">
+              Location
+            </p>
+            <p className="text-base font-body text-text-secondary">
+              {siteConfig.location}, UK
+            </p>
+          </div>
 
-              {/* Location */}
-              <div>
-                <h3 className="text-xs font-body font-600 text-text-light uppercase tracking-widest mb-3">
-                  Location
-                </h3>
-                <p className="text-base font-body text-text-base">
-                  {siteConfig.location}
-                </p>
-              </div>
-
-              {/* Social Links */}
-              <div>
-                <h3 className="text-sm font-body font-600 text-text-light uppercase tracking-widest mb-4">
-                  Connect
-                </h3>
-                <div className="space-y-3">
-                  <a
-                    href={siteConfig.social.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-base font-body text-text-base hover:text-accent-warm transition-colors group"
-                  >
-                    <Instagram size={20} />
-                    <span className="group-hover:underline">Instagram</span>
-                  </a>
-                  <a
-                    href={siteConfig.social.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-base font-body text-text-base hover:text-accent-warm transition-colors group"
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-                      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-                    </svg>
-                    <span className="group-hover:underline">YouTube</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Response Time */}
-              <div className="pt-4 border-t border-light-gray">
-                <p className="text-sm font-body text-text-light">
-                  <span className="font-600">Response time:</span> Within 48
-                  hours
-                </p>
-              </div>
+          <div>
+            <p className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-5">
+              Connect
+            </p>
+            <div className="space-y-4">
+              <a
+                href={siteConfig.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-text-primary transition-colors duration-300"
+              >
+                <Instagram size={16} />
+                Instagram
+              </a>
+              <a
+                href={siteConfig.social.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-text-primary transition-colors duration-300"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+                  <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+                </svg>
+                YouTube
+              </a>
             </div>
-          </AnimatedElement>
+          </div>
+
+          <div className="pt-6 border-t border-border-subtle">
+            <p className="text-sm font-body text-text-light">
+              Response time: within 48 hours
+            </p>
+          </div>
         </div>
-      </Container>
-    </section>
+      </AnimatedElement>
+    </div>
   );
 }

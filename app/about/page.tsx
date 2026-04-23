@@ -9,11 +9,9 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="flex-1">
-      <section className="py-24 md:py-32 px-6 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <AboutSection />
-        </div>
-      </section>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
+        <AboutSection />
+      </div>
     </main>
   );
 }

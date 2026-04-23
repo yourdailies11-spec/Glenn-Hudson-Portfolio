@@ -52,7 +52,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop links — hidden on mobile */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

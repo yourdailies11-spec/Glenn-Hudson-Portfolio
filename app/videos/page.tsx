@@ -12,19 +12,28 @@ export default async function VideosPage() {
 
   return (
     <main className="flex-1">
-      <section className="py-24 md:py-32 px-6 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-16">
-            <h1 className="text-5xl md:text-6xl font-display font-600 mb-4">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
+        {/* Page header */}
+        <div className="mb-20">
+          <div className="flex items-center gap-5 mb-6">
+            <span className="block w-8 h-px bg-accent-gold" />
+            <span className="text-[11px] font-body font-600 uppercase tracking-[0.25em] text-accent-gold">
               Videos
-            </h1>
-            <p className="text-lg text-text-secondary max-w-2xl">
-              Explore choreography, performances, and behind-the-scenes content.
-            </p>
+            </span>
           </div>
-          <VideoSection videos={videos} />
+          <h1
+            className="font-display font-600 text-text-primary leading-tight mb-6"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", letterSpacing: "-0.02em" }}
+          >
+            Videos
+          </h1>
+          <p className="text-base font-body text-text-muted max-w-xl leading-relaxed">
+            Choreography, performances, and behind-the-scenes content.
+          </p>
         </div>
-      </section>
+
+        <VideoSection videos={videos} />
+      </div>
     </main>
   );
 }
