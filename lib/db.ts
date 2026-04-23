@@ -11,6 +11,7 @@ export interface PortfolioItem {
   tags: string[];
   year: number;
   image_url: string | null;
+  video_url: string | null; // YouTube URL or video ID — plays in lightbox on click
   featured: boolean;
   order_index: number;
   published: boolean;
