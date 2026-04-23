@@ -36,7 +36,7 @@ export function Navbar() {
       {/* Main bar */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
+          isScrolled || pathname !== "/"
             ? "bg-bg-primary/95 backdrop-blur-md border-b border-border-subtle"
             : "bg-transparent"
         }`}

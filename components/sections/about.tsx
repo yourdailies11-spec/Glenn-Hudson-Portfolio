@@ -41,27 +41,29 @@ export function AboutSection({
           </p>
         </AnimatedElement>
 
-        <AnimatedElement type="fade-in">
-          <div className="pt-4 border-t border-border-subtle">
-            <p className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-8">
-              Expertise
-            </p>
-            <StaggerContainer>
-              <ul className="space-y-4">
-                {skills.map((item, index) => (
-                  <StaggerItem key={index}>
-                    <li className="flex items-start gap-4">
-                      <span className="block w-1 h-1 rounded-full bg-accent-gold mt-2.5 flex-shrink-0" />
-                      <span className="font-body text-base text-text-secondary leading-relaxed">
-                        {item}
-                      </span>
-                    </li>
-                  </StaggerItem>
-                ))}
-              </ul>
-            </StaggerContainer>
-          </div>
-        </AnimatedElement>
+        {skills.length > 0 && (
+          <AnimatedElement type="fade-in">
+            <div className="pt-4 border-t border-border-subtle">
+              <p className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold mb-8">
+                Skills
+              </p>
+              <StaggerContainer>
+                <ul className="space-y-4">
+                  {skills.map((item, index) => (
+                    <StaggerItem key={index}>
+                      <li className="flex items-start gap-4">
+                        <span className="block w-1 h-1 rounded-full bg-accent-gold mt-2.5 flex-shrink-0" />
+                        <span className="font-body text-base text-text-secondary leading-relaxed">
+                          {item}
+                        </span>
+                      </li>
+                    </StaggerItem>
+                  ))}
+                </ul>
+              </StaggerContainer>
+            </div>
+          </AnimatedElement>
+        )}
       </div>
     </div>
   );
