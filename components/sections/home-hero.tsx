@@ -106,8 +106,8 @@ export function HomeHeroSection({
                     src={`https://www.youtube.com/embed/${heroVideoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${heroVideoId}&playsinline=1&rel=0&enablejsapi=0`}
                     className="absolute pointer-events-none"
                     style={{
-                      width: "300%",
-                      height: "300%",
+                      width: "178%",
+                      height: "178%",
                       top: "50%",
                       left: "50%",
                       transform: "translate(-50%, -50%)",
