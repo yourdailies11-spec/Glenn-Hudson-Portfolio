@@ -29,6 +29,19 @@ export function HomeHeroSection({
 
           {/* Left — text */}
           <div>
+            {/* Profile photo above label */}
+            {profilePhoto && (
+              <motion.div {...fadeUp(0.1)} className="mb-8">
+                <div className="w-14 h-14 rounded-full overflow-hidden border border-border-subtle">
+                  <img
+                    src={profilePhoto}
+                    alt="Glenn Hudson"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.div>
+            )}
+
             <motion.p
               {...fadeUp(0.15)}
               className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-10"
@@ -80,7 +93,12 @@ export function HomeHeroSection({
             {...fadeUp(0.5)}
             className="hidden md:block"
           >
-            <div className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative">
+            <motion.div
+              className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative"
+              initial={{ clipPath: "inset(12% 38% 12% 38%)" }}
+              animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+              transition={{ duration: 2.2, ease: [0.25, 0, 0, 1], delay: 1.0 }}
+            >
               {/* Background video layer */}
               {heroVideoId && (
                 <>
@@ -103,14 +121,8 @@ export function HomeHeroSection({
                 </>
               )}
 
-              {/* Profile photo on top, or silhouette placeholder */}
-              {profilePhoto ? (
-                <img
-                  src={profilePhoto}
-                  alt="Glenn Hudson"
-                  className="absolute inset-0 w-full h-full object-cover z-20"
-                />
-              ) : !heroVideoId ? (
+              {/* Silhouette placeholder when no video is set */}
+              {!heroVideoId && (
                 <div className="w-full h-full flex flex-col items-center justify-center gap-5">
                   <svg
                     width="60"
@@ -127,11 +139,11 @@ export function HomeHeroSection({
                     />
                   </svg>
                   <p className="text-[10px] font-body uppercase tracking-[0.22em] text-text-light">
-                    Profile Photo
+                    Video
                   </p>
                 </div>
-              ) : null}
-            </div>
+              )}
+            </motion.div>
           </motion.div>
 
         </div>
