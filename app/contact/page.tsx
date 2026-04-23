@@ -1,4 +1,6 @@
 import { ContactSection } from "@/components/sections/contact";
+import { getSiteSettings } from "@/lib/db";
+import { siteConfig } from "@/data/site-content";
 
 export const metadata = {
   title: "Contact — Glenn Hudson",
@@ -6,11 +8,16 @@ export const metadata = {
     "Get in touch with Glenn Hudson for commissions, collaborations, and inquiries.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+
+  const email = settings.social_email || siteConfig.social.email;
+  const instagram = settings.social_instagram || siteConfig.social.instagram;
+  const youtube = settings.social_youtube || siteConfig.social.youtube;
+
   return (
     <main className="flex-1">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
-        {/* Page header */}
         <div className="mb-20">
           <div className="flex items-center gap-5 mb-6">
             <span className="block w-8 h-px bg-accent-gold" />
@@ -29,8 +36,7 @@ export default function ContactPage() {
             open to new opportunities and creative conversations.
           </p>
         </div>
-
-        <ContactSection />
+        <ContactSection email={email} instagram={instagram} youtube={youtube} />
       </div>
     </main>
   );

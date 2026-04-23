@@ -29,6 +29,27 @@ export interface Video {
   published: boolean;
 }
 
+// ---- Site Settings ----
+
+export async function getSiteSettings(): Promise<Record<string, string>> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("settings");
+
+  const client = getSupabase();
+  if (!client) return {};
+
+  const { data, error } = await client
+    .from("site_settings")
+    .select("key, value");
+
+  if (error) {
+    console.error("getSiteSettings error:", error.message);
+    return {};
+  }
+  return Object.fromEntries((data ?? []).map((r) => [r.key, r.value]));
+}
+
 // ---- Portfolio ----
 
 export async function getPortfolioItems(): Promise<PortfolioItem[]> {

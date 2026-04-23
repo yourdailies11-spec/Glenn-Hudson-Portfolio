@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { siteConfig } from "@/data/site-content";
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -10,7 +9,13 @@ const fadeUp = (delay: number) => ({
   transition: { duration: 1, ease: [0.25, 0, 0, 1], delay },
 });
 
-export function HomeHeroSection() {
+export function HomeHeroSection({
+  description,
+  profilePhoto,
+}: {
+  description: string;
+  profilePhoto: string | null;
+}) {
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-[68px] overflow-hidden">
       {/* Main content */}
@@ -45,8 +50,7 @@ export function HomeHeroSection() {
 
             <motion.div {...fadeUp(0.65)} className="mt-12 max-w-sm">
               <p className="text-[15px] font-body text-text-secondary leading-relaxed mb-10">
-                Crafting purposeful movement for stage, screen, and creative
-                collaboration — based in London.
+                {description}
               </p>
               <div className="flex items-center gap-10">
                 <Link
@@ -72,9 +76,9 @@ export function HomeHeroSection() {
             className="hidden md:block"
           >
             <div className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative">
-              {siteConfig.profilePhoto ? (
+              {profilePhoto ? (
                 <img
-                  src={siteConfig.profilePhoto}
+                  src={profilePhoto}
                   alt="Glenn Hudson"
                   className="w-full h-full object-cover"
                 />

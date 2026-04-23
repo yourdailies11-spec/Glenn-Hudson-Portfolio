@@ -3,7 +3,7 @@
 import { siteConfig } from "@/data/site-content";
 import { AnimatedElement, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
-export function AboutSection() {
+export function AboutSection({ intro, bio }: { intro: string; bio: string }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
       {/* Heading column */}
@@ -23,13 +23,13 @@ export function AboutSection() {
       <div className="md:col-span-2 space-y-10">
         <AnimatedElement type="fade-in">
           <p className="text-xl font-body text-text-secondary leading-relaxed">
-            {siteConfig.about.intro}
+            {intro}
           </p>
         </AnimatedElement>
 
         <AnimatedElement type="fade-in">
           <p className="text-base font-body text-text-muted leading-relaxed">
-            {siteConfig.about.bio}
+            {bio}
           </p>
         </AnimatedElement>
 

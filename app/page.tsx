@@ -3,17 +3,24 @@ import { HomeVideoSlideshow } from "@/components/sections/home-video-slideshow";
 import { HomeFeaturedWork } from "@/components/sections/home-featured-work";
 import { HomeFeaturedVideos } from "@/components/sections/home-featured-videos";
 import { HomeCtaSection } from "@/components/sections/home-cta";
-import { getFeaturedPortfolioItems, getFeaturedVideos } from "@/lib/db";
+import { getFeaturedPortfolioItems, getFeaturedVideos, getSiteSettings } from "@/lib/db";
+import { siteConfig } from "@/data/site-content";
 
 export default async function Home() {
-  const [featuredWork, featuredVideos] = await Promise.all([
+  const [featuredWork, featuredVideos, settings] = await Promise.all([
     getFeaturedPortfolioItems(),
     getFeaturedVideos(),
+    getSiteSettings(),
   ]);
+
+  const heroDescription =
+    settings.hero_description || siteConfig.hero.description;
+  const profilePhoto =
+    settings.profile_photo_url || siteConfig.profilePhoto || null;
 
   return (
     <main className="flex-1">
-      <HomeHeroSection />
+      <HomeHeroSection description={heroDescription} profilePhoto={profilePhoto} />
       <HomeVideoSlideshow videos={featuredVideos} />
       <HomeFeaturedWork items={featuredWork} />
       <HomeFeaturedVideos videos={featuredVideos} />

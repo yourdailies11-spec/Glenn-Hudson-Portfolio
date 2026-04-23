@@ -1,4 +1,6 @@
 import { AboutSection } from "@/components/sections/about";
+import { getSiteSettings } from "@/lib/db";
+import { siteConfig } from "@/data/site-content";
 
 export const metadata = {
   title: "About — Glenn Hudson",
@@ -6,11 +8,16 @@ export const metadata = {
     "Learn more about Glenn Hudson, choreographer and artistic director based in London.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
+
+  const intro = settings.about_intro || siteConfig.about.intro;
+  const bio = settings.about_bio || siteConfig.about.bio;
+
   return (
     <main className="flex-1">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-28 md:py-36">
-        <AboutSection />
+        <AboutSection intro={intro} bio={bio} />
       </div>
     </main>
   );

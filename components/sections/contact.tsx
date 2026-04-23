@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { siteConfig } from "@/data/site-content";
 import { AnimatedElement } from "@/components/ui/motion";
+import { siteConfig } from "@/data/site-content";
 import { Instagram } from "lucide-react";
 
 interface FormData {
@@ -20,7 +20,15 @@ const projectTypes = [
   { value: "other", label: "Other" },
 ];
 
-export function ContactSection() {
+export function ContactSection({
+  email,
+  instagram,
+  youtube,
+}: {
+  email: string;
+  instagram: string;
+  youtube: string;
+}) {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -167,10 +175,10 @@ export function ContactSection() {
               Email
             </p>
             <a
-              href={`mailto:${siteConfig.social.email}`}
+              href={`mailto:${email}`}
               className="text-base font-body text-text-secondary hover:text-accent-gold transition-colors duration-300"
             >
-              {siteConfig.social.email}
+              {email}
             </a>
           </div>
 
@@ -189,7 +197,7 @@ export function ContactSection() {
             </p>
             <div className="space-y-4">
               <a
-                href={siteConfig.social.instagram}
+                href={instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-text-primary transition-colors duration-300"
@@ -198,7 +206,7 @@ export function ContactSection() {
                 Instagram
               </a>
               <a
-                href={siteConfig.social.youtube}
+                href={youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm font-body text-text-muted hover:text-text-primary transition-colors duration-300"
