@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { siteConfig } from "@/data/site-content";
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
@@ -12,59 +13,97 @@ const fadeUp = (delay: number) => ({
 export function HomeHeroSection() {
   return (
     <section className="relative min-h-screen flex flex-col justify-between pt-[68px] overflow-hidden">
-      {/* Centering wrapper */}
+      {/* Main content */}
       <div className="flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 md:px-10 py-16">
-        <motion.p
-          {...fadeUp(0.15)}
-          className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-10"
-        >
-          Choreographer &amp; Artistic Director
-        </motion.p>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_340px] gap-12 lg:gap-20 items-center">
 
-        <div>
-          <motion.h1
-            {...fadeUp(0.3)}
-            className="font-display font-600 text-text-primary leading-[0.88] select-none"
-            style={{
-              fontSize: "clamp(4rem, 11vw, 12rem)",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Glenn
-          </motion.h1>
-          <motion.h1
-            {...fadeUp(0.46)}
-            className="font-display font-600 text-text-muted leading-[0.88] select-none"
-            style={{
-              fontSize: "clamp(4rem, 11vw, 12rem)",
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Hudson
-          </motion.h1>
-        </div>
+          {/* Left — text */}
+          <div>
+            <motion.p
+              {...fadeUp(0.15)}
+              className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-10"
+            >
+              Choreographer &amp; Artistic Director
+            </motion.p>
 
-        <motion.div {...fadeUp(0.65)} className="mt-14 max-w-sm">
-          <p className="text-[15px] font-body text-text-secondary leading-relaxed mb-10">
-            Crafting purposeful movement for stage, screen, and creative
-            collaboration — based in London.
-          </p>
-          <div className="flex items-center gap-10">
-            <Link
-              href="/work"
-              className="group flex items-center gap-3 text-[11px] font-body font-600 uppercase tracking-[0.22em] text-text-primary hover:text-accent-gold transition-colors duration-300"
-            >
-              View Work
-              <span className="block h-px bg-current w-6 group-hover:w-10 transition-all duration-500 ease-out" />
-            </Link>
-            <Link
-              href="/contact"
-              className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold hover:opacity-60 transition-opacity duration-300"
-            >
-              Get in Touch
-            </Link>
+            <div>
+              <motion.h1
+                {...fadeUp(0.3)}
+                className="font-display font-600 text-text-primary leading-[0.88] select-none"
+                style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
+              >
+                Glenn
+              </motion.h1>
+              <motion.h1
+                {...fadeUp(0.46)}
+                className="font-display font-600 text-text-muted leading-[0.88] select-none"
+                style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
+              >
+                Hudson
+              </motion.h1>
+            </div>
+
+            <motion.div {...fadeUp(0.65)} className="mt-12 max-w-sm">
+              <p className="text-[15px] font-body text-text-secondary leading-relaxed mb-10">
+                Crafting purposeful movement for stage, screen, and creative
+                collaboration — based in London.
+              </p>
+              <div className="flex items-center gap-10">
+                <Link
+                  href="/work"
+                  className="group flex items-center gap-3 text-[11px] font-body font-600 uppercase tracking-[0.22em] text-text-primary hover:text-accent-gold transition-colors duration-300"
+                >
+                  View Work
+                  <span className="block h-px bg-current w-6 group-hover:w-10 transition-all duration-500 ease-out" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="text-[11px] font-body font-600 uppercase tracking-[0.22em] text-accent-gold hover:opacity-60 transition-opacity duration-300"
+                >
+                  Get in Touch
+                </Link>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* Right — profile photo */}
+          <motion.div
+            {...fadeUp(0.5)}
+            className="hidden md:block"
+          >
+            <div className="aspect-[3/4] bg-bg-tertiary border border-border-subtle overflow-hidden relative">
+              {siteConfig.profilePhoto ? (
+                <img
+                  src={siteConfig.profilePhoto}
+                  alt="Glenn Hudson"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-5">
+                  {/* Silhouette placeholder */}
+                  <svg
+                    width="60"
+                    height="60"
+                    viewBox="0 0 60 60"
+                    fill="none"
+                    className="text-border-low"
+                  >
+                    <circle cx="30" cy="22" r="12" stroke="currentColor" strokeWidth="1.5" />
+                    <path
+                      d="M6 54c0-13.255 10.745-24 24-24s24 10.745 24 24"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                  <p className="text-[10px] font-body uppercase tracking-[0.22em] text-text-light">
+                    Profile Photo
+                  </p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+        </div>
       </div>
 
       {/* Bottom metadata strip */}

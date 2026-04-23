@@ -8,17 +8,16 @@ import Link from "next/link";
 
 const thumbnailUrl = (id: string) =>
   `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-const embedUrl = (id: string) =>
-  `https://www.youtube.com/embed/${id}?autoplay=1`;
+const embedUrl = (id: string, startSeconds?: number | null) =>
+  `https://www.youtube.com/embed/${id}?autoplay=1${startSeconds ? `&start=${startSeconds}` : ""}`;
 
 export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
-  const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<Video | null>(null);
 
   return (
     <>
       <section className="py-28 md:py-36 px-6 md:px-10 border-t border-border-subtle bg-bg-secondary">
         <div className="max-w-7xl mx-auto">
-          {/* Section header */}
           <AnimatedElement type="fade-in">
             <div className="flex items-center justify-between mb-20">
               <div className="flex items-center gap-6">
@@ -42,20 +41,17 @@ export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
               {videos.map((video) => (
                 <StaggerItem key={video.id}>
                   <button
-                    onClick={() => setActiveVideoId(video.video_id)}
+                    onClick={() => setActiveVideo(video)}
                     className="w-full text-left group bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-500"
                   >
-                    {/* Thumbnail */}
                     <div className="aspect-video overflow-hidden relative">
                       <img
                         src={thumbnailUrl(video.video_id)}
                         alt={video.title}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
-                      {/* Overlay */}
                       <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors duration-500 flex items-center justify-center">
-                        {/* Play button */}
-                        <div className="w-14 h-14 border border-text-primary/40 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-400">
+                        <div className="w-14 h-14 border border-text-primary/40 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-300">
                           <div
                             className="w-0 h-0 ml-1"
                             style={{
@@ -71,9 +67,12 @@ export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
                           {video.duration}
                         </div>
                       )}
+                      {video.start_seconds && (
+                        <div className="absolute top-4 left-4 text-[10px] font-body font-600 uppercase tracking-wider bg-accent-gold/90 text-bg-primary px-2 py-1">
+                          From {new Date(video.start_seconds * 1000).toISOString().slice(14, 19)}
+                        </div>
+                      )}
                     </div>
-
-                    {/* Info */}
                     <div className="p-7">
                       <h3 className="text-xl font-display font-600 text-text-primary group-hover:text-accent-gold transition-colors duration-300 line-clamp-2 mb-2">
                         {video.title}
@@ -92,16 +91,15 @@ export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
         </div>
       </section>
 
-      {/* Lightbox */}
-      {activeVideoId && (
+      {activeVideo && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6"
-          onClick={() => setActiveVideoId(null)}
+          onClick={() => setActiveVideo(null)}
         >
           <button
             aria-label="Close video"
             className="absolute top-6 right-6 w-10 h-10 border border-text-primary/20 flex items-center justify-center text-text-primary/60 hover:text-text-primary hover:border-text-primary/60 transition-all duration-200"
-            onClick={() => setActiveVideoId(null)}
+            onClick={() => setActiveVideo(null)}
           >
             <X size={18} />
           </button>
@@ -110,7 +108,7 @@ export function HomeFeaturedVideos({ videos }: { videos: Video[] }) {
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src={embedUrl(activeVideoId)}
+              src={embedUrl(activeVideo.video_id, activeVideo.start_seconds)}
               className="w-full h-full"
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen

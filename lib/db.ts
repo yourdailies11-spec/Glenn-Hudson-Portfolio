@@ -22,6 +22,7 @@ export interface Video {
   title: string;
   description: string;
   duration: string;
+  start_seconds: number | null; // timestamp to start playback from
   featured: boolean;
   order_index: number;
   published: boolean;
@@ -110,7 +111,7 @@ export async function getFeaturedVideos(): Promise<Video[]> {
     .eq("published", true)
     .eq("featured", true)
     .order("order_index", { ascending: true })
-    .limit(2);
+    .limit(6);
 
   if (error) {
     console.error("getFeaturedVideos error:", error.message);

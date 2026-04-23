@@ -4,6 +4,7 @@ export const siteConfig = {
   description:
     "London-based choreographer and artistic director. Award-winning movement creative for performance, production, and direction.",
   tagline: "London-based choreographer, artistic director",
+  profilePhoto: null as string | null, // Set to Supabase Storage URL when available
   location: "London",
   year: new Date().getFullYear(),
 
