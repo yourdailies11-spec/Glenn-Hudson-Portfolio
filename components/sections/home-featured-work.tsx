@@ -6,17 +6,8 @@ import { StaggerContainer, StaggerItem, AnimatedElement } from "@/components/ui/
 import { X } from "lucide-react";
 import Link from "next/link";
 
-function extractYouTubeId(url: string): string {
-  const short = url.match(/youtu\.be\/([^?&\s]+)/);
-  if (short) return short[1];
-  const long = url.match(/[?&]v=([^&\s]+)/);
-  if (long) return long[1];
-  return url.trim();
-}
-
-function embedUrl(raw: string) {
-  return `https://www.youtube.com/embed/${extractYouTubeId(raw)}?autoplay=1`;
-}
+const embedUrl = (id: string) =>
+  `https://www.youtube.com/embed/${id}?autoplay=1`;
 
 export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
   const [activeItem, setActiveItem] = useState<PortfolioItem | null>(null);
@@ -48,8 +39,8 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
               {items.map((item, i) => (
                 <StaggerItem key={item.id}>
                   <div
-                    className={`group bg-bg-primary hover:bg-bg-secondary transition-colors duration-500 ${item.video_url ? "cursor-pointer" : ""}`}
-                    onClick={() => item.video_url && setActiveItem(item)}
+                    className={`group bg-bg-primary hover:bg-bg-secondary transition-colors duration-500 ${item.video_id ? "cursor-pointer" : ""}`}
+                    onClick={() => item.video_id && setActiveItem(item)}
                   >
                     <div className="aspect-[3/4] overflow-hidden bg-bg-tertiary relative">
                       {item.image_url ? (
@@ -70,7 +61,7 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
                         </span>
                       </div>
 
-                      {item.video_url && (
+                      {item.video_id && (
                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
                           <div className="w-12 h-12 border border-text-primary/60 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-300">
                             <div
@@ -93,7 +84,7 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
                       <h3 className="text-2xl font-display font-600 leading-snug text-text-primary group-hover:text-accent-gold transition-colors duration-300">
                         {item.title}
                       </h3>
-                      {item.video_url && (
+                      {item.video_id && (
                         <p className="text-[10px] font-body uppercase tracking-[0.18em] text-accent-gold mt-3 flex items-center gap-2">
                           <span className="block w-3 h-px bg-accent-gold" />
                           Watch
@@ -108,7 +99,7 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
         </div>
       </section>
 
-      {activeItem?.video_url && (
+      {activeItem?.video_id && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6"
           onClick={() => setActiveItem(null)}
@@ -131,7 +122,7 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src={embedUrl(activeItem.video_url)}
+              src={embedUrl(activeItem.video_id)}
               className="w-full h-full"
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen

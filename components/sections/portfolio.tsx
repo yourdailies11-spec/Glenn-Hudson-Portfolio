@@ -14,18 +14,8 @@ const portfolioCategories = [
   { value: "collaboration", label: "Collaborations" },
 ];
 
-// Accepts full YouTube URLs or bare video IDs
-function extractYouTubeId(url: string): string {
-  const short = url.match(/youtu\.be\/([^?&\s]+)/);
-  if (short) return short[1];
-  const long = url.match(/[?&]v=([^&\s]+)/);
-  if (long) return long[1];
-  return url.trim();
-}
-
-function embedUrl(raw: string) {
-  return `https://www.youtube.com/embed/${extractYouTubeId(raw)}?autoplay=1`;
-}
+const embedUrl = (id: string) =>
+  `https://www.youtube.com/embed/${id}?autoplay=1`;
 
 export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -39,7 +29,6 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
   return (
     <>
       <div>
-        {/* Category filter */}
         <AnimatedElement type="fade-in" className="mb-16">
           <div className="flex flex-wrap gap-2">
             {portfolioCategories.map((cat) => (
@@ -63,8 +52,8 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
             {filtered.map((item, i) => (
               <StaggerItem key={item.id}>
                 <div
-                  className={`group bg-bg-primary hover:bg-bg-secondary transition-colors duration-500 ${item.video_url ? "cursor-pointer" : ""}`}
-                  onClick={() => item.video_url && setActiveItem(item)}
+                  className={`group bg-bg-primary hover:bg-bg-secondary transition-colors duration-500 ${item.video_id ? "cursor-pointer" : ""}`}
+                  onClick={() => item.video_id && setActiveItem(item)}
                 >
                   <div className="aspect-[4/5] overflow-hidden bg-bg-tertiary relative">
                     {item.image_url ? (
@@ -79,15 +68,13 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
                       </div>
                     )}
 
-                    {/* Index */}
                     <div className="absolute top-5 left-5">
                       <span className="text-[11px] font-body font-500 text-text-light/60 tracking-widest">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                     </div>
 
-                    {/* Play button — only when video exists */}
-                    {item.video_url && (
+                    {item.video_id && (
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/30">
                         <div className="w-14 h-14 border border-text-primary/60 group-hover:border-accent-gold flex items-center justify-center transition-colors duration-300">
                           <div
@@ -127,7 +114,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
                         ))}
                       </div>
                     )}
-                    {item.video_url && (
+                    {item.video_id && (
                       <p className="text-[10px] font-body uppercase tracking-[0.18em] text-accent-gold mt-5 flex items-center gap-2">
                         <span className="block w-3 h-px bg-accent-gold" />
                         Watch
@@ -149,8 +136,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
         )}
       </div>
 
-      {/* Video lightbox */}
-      {activeItem?.video_url && (
+      {activeItem?.video_id && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6"
           onClick={() => setActiveItem(null)}
@@ -173,7 +159,7 @@ export function PortfolioSection({ items }: { items: PortfolioItem[] }) {
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src={embedUrl(activeItem.video_url)}
+              src={embedUrl(activeItem.video_id)}
               className="w-full h-full"
               allow="autoplay; encrypted-media; picture-in-picture"
               allowFullScreen
