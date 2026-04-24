@@ -15,8 +15,7 @@ export default async function Home() {
 
   const heroDescription =
     settings.hero_description || siteConfig.hero.description;
-  const profilePhoto =
-    settings.profile_photo_url || siteConfig.profilePhoto || null;
+  const profilePhoto = settings.profile_photo_url || null;
   const heroVideoId = settings.hero_video_id || null;
   const instagramUrl = settings.social_instagram || siteConfig.social.instagram;
 
