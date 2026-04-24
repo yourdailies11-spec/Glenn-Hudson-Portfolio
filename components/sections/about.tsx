@@ -13,6 +13,7 @@ export function AboutSection({
   skills: string[];
 }) {
   return (
+    <div className="space-y-20 md:space-y-28">
     <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
       {/* Heading column */}
       <AnimatedElement type="slide-up" className="md:col-span-1">
@@ -65,6 +66,39 @@ export function AboutSection({
           </AnimatedElement>
         )}
       </div>
+    </div>
+
+    {/* Photo frames */}
+    <AnimatedElement type="fade-in">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+        {[
+          { label: "On Stage" },
+          { label: "In Studio" },
+          { label: "At Work" },
+        ].map((frame) => (
+          <div key={frame.label} className="group relative aspect-[4/5] bg-bg-secondary border border-border-subtle overflow-hidden">
+            {/* Outer decorative inset */}
+            <div className="absolute inset-3 border border-border-low pointer-events-none z-10" />
+            {/* Corner accents */}
+            <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-accent-gold/40 z-10" />
+            <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-accent-gold/40 z-10" />
+            <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-accent-gold/40 z-10" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-accent-gold/40 z-10" />
+            {/* Placeholder */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="text-border-low">
+                <rect x="3" y="7" width="26" height="20" rx="1" stroke="currentColor" strokeWidth="1" />
+                <circle cx="11" cy="14" r="3" stroke="currentColor" strokeWidth="1" />
+                <path d="M3 24l7-6 5 5 4-4 10 9" stroke="currentColor" strokeWidth="1" />
+              </svg>
+              <span className="text-[10px] font-body uppercase tracking-[0.22em] text-text-light">
+                {frame.label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </AnimatedElement>
     </div>
   );
 }

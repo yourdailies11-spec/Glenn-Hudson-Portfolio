@@ -29,41 +29,45 @@ export function HomeHeroSection({
 
           {/* Left — text */}
           <div className="flex flex-col justify-center">
-            {/* Profile photo above label */}
-            {profilePhoto && (
-              <motion.div {...fadeUp(0.1)} className="mb-8">
-                <div className="w-14 h-14 rounded-full overflow-hidden border border-border-subtle">
-                  <img
-                    src={profilePhoto}
-                    alt="Glenn Hudson"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </motion.div>
-            )}
-
             <motion.p
               {...fadeUp(0.15)}
-              className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-10"
+              className="text-[11px] font-body font-600 text-accent-gold uppercase tracking-[0.28em] mb-6"
             >
               Choreographer &amp; Artistic Director
             </motion.p>
 
-            <div>
-              <motion.h1
-                {...fadeUp(0.3)}
-                className="font-display font-600 text-text-primary leading-[0.88] select-none"
-                style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
-              >
-                Glenn
-              </motion.h1>
-              <motion.h1
-                {...fadeUp(0.46)}
-                className="font-display font-600 text-text-muted leading-[0.88] select-none"
-                style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
-              >
-                Hudson
-              </motion.h1>
+            {/* Photo alongside Glenn Hudson heading */}
+            <div className="flex items-stretch gap-5 md:gap-7">
+              {profilePhoto && (
+                <motion.div
+                  {...fadeUp(0.2)}
+                  className="flex-shrink-0 overflow-hidden border border-border-subtle"
+                  style={{ width: "clamp(90px, 12vw, 160px)" }}
+                >
+                  <img
+                    src={profilePhoto}
+                    alt="Glenn Hudson"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </motion.div>
+              )}
+
+              <div>
+                <motion.h1
+                  {...fadeUp(0.3)}
+                  className="font-display font-600 text-text-primary leading-[0.88] select-none"
+                  style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
+                >
+                  Glenn
+                </motion.h1>
+                <motion.h1
+                  {...fadeUp(0.46)}
+                  className="font-display font-600 text-text-muted leading-[0.88] select-none"
+                  style={{ fontSize: "clamp(3.5rem, 10vw, 11rem)", letterSpacing: "-0.03em" }}
+                >
+                  Hudson
+                </motion.h1>
+              </div>
             </div>
 
             <motion.div {...fadeUp(0.65)} className="mt-12 max-w-sm">
