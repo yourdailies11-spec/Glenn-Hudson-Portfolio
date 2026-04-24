@@ -52,7 +52,7 @@ export function HomeHeroSection({
                 </motion.div>
               )}
 
-              <div>
+              <div className="border border-accent-gold/30 px-4 py-2" style={{ background: "rgba(212,175,55,0.04)" }}>
                 <motion.h1
                   {...fadeUp(0.3)}
                   className="font-display font-600 text-text-primary leading-[0.88] select-none"
