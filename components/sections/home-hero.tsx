@@ -29,7 +29,7 @@ export function HomeHeroSection({
         {/* Left — text column, width matches left portion of site grid */}
         <div
           className="flex flex-col justify-center py-16 px-6 md:pl-10 md:pr-10 w-full flex-shrink-0"
-          style={{ maxWidth: "min(42vw, 500px)" }}
+          style={{ maxWidth: "min(48vw, 580px)" }}
         >
           <motion.p
             {...fadeUp(0.15)}
