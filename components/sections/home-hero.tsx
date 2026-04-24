@@ -24,7 +24,7 @@ export function HomeHeroSection({
       <div className="absolute top-0 inset-x-0 h-36 bg-gradient-to-b from-bg-primary via-bg-primary/60 to-transparent pointer-events-none z-10" />
 
       {/* Main content — full viewport width, no max-w constraint */}
-      <div className="flex-1 flex flex-row items-stretch overflow-hidden">
+      <div className="flex-1 flex flex-row items-center gap-6 md:gap-10 overflow-hidden">
 
         {/* Left — text column, width matches left portion of site grid */}
         <div
