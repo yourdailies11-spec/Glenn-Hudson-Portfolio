@@ -33,7 +33,7 @@ export interface Video {
 
 export async function getSiteSettings(): Promise<Record<string, string>> {
   "use cache";
-  cacheLife("hours");
+  cacheLife("minutes");
   cacheTag("settings");
 
   const client = getSupabase();
