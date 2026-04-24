@@ -97,13 +97,13 @@ export function HomeHeroSection({
           </motion.div>
         </div>
 
-        {/* Right — video fills all remaining space to right edge */}
+        {/* Right — 16:9 video box, fills column width */}
         <motion.div
           {...fadeUp(0.5)}
-          className="hidden md:flex flex-1 self-stretch"
+          className="hidden md:flex flex-1 items-center py-10 pr-0"
         >
           <motion.div
-            className="w-full h-full bg-bg-tertiary overflow-hidden relative"
+            className="w-full aspect-video bg-bg-tertiary overflow-hidden relative"
             initial={{ clipPath: "inset(12% 38% 12% 38%)" }}
             animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
             transition={{ duration: 2.2, ease: [0.25, 0, 0, 1], delay: 1.0 }}
