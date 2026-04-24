@@ -17,7 +17,7 @@ export default async function ContactPage() {
 
   return (
     <main className="flex-1 pt-[68px]">
-      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-28 md:pb-36">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-32 pb-28 md:pb-36">
         <div className="mb-20">
           <div className="flex items-center gap-5 mb-6">
             <span className="block w-8 h-px bg-accent-gold" />
