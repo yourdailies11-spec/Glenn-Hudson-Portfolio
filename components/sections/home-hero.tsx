@@ -25,7 +25,7 @@ export function HomeHeroSection({
 
       {/* Main content */}
       <div className="flex-1 flex flex-col justify-center max-w-7xl mx-auto w-full px-6 md:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 lg:gap-14 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-10 lg:gap-14 items-stretch">
 
           {/* Left — text */}
           <div className="flex flex-col justify-center">
