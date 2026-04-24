@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   }
 
   const tag = req.nextUrl.searchParams.get("tag") ?? "settings";
-  revalidateTag(tag);
+  revalidateTag(tag, "seconds");
 
   return NextResponse.json({ revalidated: true, tag, time: new Date().toISOString() });
 }
