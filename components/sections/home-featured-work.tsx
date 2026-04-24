@@ -42,9 +42,9 @@ export function HomeFeaturedWork({ items }: { items: PortfolioItem[] }) {
                     className={`group relative aspect-square overflow-hidden bg-bg-tertiary ${item.video_id ? "cursor-pointer" : ""}`}
                     onClick={() => item.video_id && setActiveItem(item)}
                   >
-                    {item.image_url ? (
+                    {(item.image_url || item.video_id) ? (
                       <img
-                        src={item.image_url}
+                        src={item.image_url ?? `https://img.youtube.com/vi/${item.video_id}/maxresdefault.jpg`}
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
