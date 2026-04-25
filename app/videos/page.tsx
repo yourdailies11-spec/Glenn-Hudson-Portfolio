@@ -11,7 +11,7 @@ export default async function VideosPage() {
   const videos = await getVideos();
 
   return (
-    <main className="flex-1 pt-[68px]">
+    <main className="flex-1">
       <div className="max-w-7xl mx-auto px-6 md:px-10 pt-24 md:pt-32 pb-28 md:pb-36">
         {/* Page header */}
         <div className="mb-20">

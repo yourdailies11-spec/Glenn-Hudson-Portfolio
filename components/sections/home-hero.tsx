@@ -19,7 +19,7 @@ export function HomeHeroSection({
   heroVideoId: string | null;
 }) {
   return (
-    <section className="relative min-h-screen flex flex-col justify-between pt-[68px] overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden">
       {/* Gradient veil */}
       <div className="absolute top-0 inset-x-0 h-36 bg-gradient-to-b from-bg-primary via-bg-primary/60 to-transparent pointer-events-none z-10" />
 

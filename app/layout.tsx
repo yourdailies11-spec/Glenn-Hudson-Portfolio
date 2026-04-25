@@ -76,6 +76,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-bg-primary text-text-primary">
         <Navbar />
+        <div className="h-[68px] shrink-0" aria-hidden="true" />
         {children}
         <Footer settings={settings} />
       </body>
