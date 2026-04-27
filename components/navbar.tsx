@@ -9,6 +9,7 @@ const navLinks = [
   { label: "About", href: "/about" },
   { label: "Work", href: "/work" },
   { label: "Videos", href: "/videos" },
+  { label: "Definitives", href: "/company" },
 ];
 
 export function Navbar() {
@@ -58,7 +59,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`text-[13px] font-body font-500 transition-colors duration-300 ${
-                  pathname === link.href
+                  pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href))
                     ? "text-text-primary"
                     : "text-text-muted hover:text-text-primary"
                 }`}
