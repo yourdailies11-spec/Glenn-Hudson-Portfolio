@@ -41,7 +41,7 @@ export function HomeCtaSection({ instagram }: { instagram: string }) {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 mt-6 text-[11px] font-body font-600 uppercase tracking-[0.22em] text-text-muted hover:text-accent-gold transition-colors duration-300"
               >
-                Visit Definitives — defcreative.co.uk
+                Visit The DefCreative Page
                 <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="opacity-50 group-hover:opacity-100 transition-opacity">
                   <path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
