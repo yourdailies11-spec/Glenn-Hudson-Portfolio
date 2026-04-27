@@ -142,3 +142,98 @@ export async function getFeaturedVideos(): Promise<Video[]> {
   return data ?? [];
 }
 
+// ---- Definitives Company ----
+
+export interface CompanyWork {
+  id: string;
+  year: string;
+  title: string;
+  category: string;
+  description: string | null;
+  order_index: number;
+  published: boolean;
+}
+
+export interface CompanyDancer {
+  id: string;
+  name: string;
+  role: string;
+  photo_url: string | null;
+  bio: string | null;
+  order_index: number;
+  published: boolean;
+}
+
+export interface CompanyNewsItem {
+  id: string;
+  title: string;
+  date_label: string;
+  excerpt: string;
+  content: string | null;
+  order_index: number;
+  published: boolean;
+}
+
+export async function getCompanyWorks(): Promise<CompanyWork[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("company");
+
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
+    .from("company_works")
+    .select("*")
+    .eq("published", true)
+    .order("order_index", { ascending: true });
+
+  if (error) {
+    console.error("getCompanyWorks error:", error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function getCompanyDancers(): Promise<CompanyDancer[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("company");
+
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
+    .from("company_dancers")
+    .select("*")
+    .eq("published", true)
+    .order("order_index", { ascending: true });
+
+  if (error) {
+    console.error("getCompanyDancers error:", error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function getCompanyNews(): Promise<CompanyNewsItem[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("company");
+
+  const client = getSupabase();
+  if (!client) return [];
+
+  const { data, error } = await client
+    .from("company_news")
+    .select("*")
+    .eq("published", true)
+    .order("order_index", { ascending: true });
+
+  if (error) {
+    console.error("getCompanyNews error:", error.message);
+    return [];
+  }
+  return data ?? [];
+}
+
