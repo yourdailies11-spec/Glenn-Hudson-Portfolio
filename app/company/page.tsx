@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DefinitivesLandingNav } from "@/components/definitives/landing-nav";
 import { getSiteSettings } from "@/lib/db";
 import { siteConfig } from "@/data/site-content";
@@ -41,6 +42,18 @@ export default async function CompanyPage() {
           <span className="text-[11px] font-body text-text-muted tracking-wide">
             {location}
           </span>
+          <span className="w-1 h-1 rounded-full bg-border-low" />
+          <a
+            href="https://www.defcreative.co.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 text-[11px] font-body font-600 text-accent-gold hover:opacity-70 transition-opacity duration-300"
+          >
+            defcreative.co.uk
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" className="opacity-60 group-hover:opacity-100 transition-opacity">
+              <path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </div>
       </div>
 
